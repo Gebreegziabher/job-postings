@@ -6,17 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Random;
 
 @Component
 public class PublisherSchedule {
     @Autowired
-    DataPublisher publisher;
+    KafkaPublisher publisher;
 
-    @Scheduled(fixedRate = 5000) //run every 30 seconds
+    @Autowired
+    JmsSender sender;
+
+    @Scheduled(fixedRate = 15000) //run every 15 seconds
     public void run() throws JsonProcessingException {
         JobPosting jobPosting = new JobPosting.Builder()
                 .company(Company.name())
@@ -36,7 +36,8 @@ public class PublisherSchedule {
                 .openFrom(RandomDate.getDate())
                 .count(new Random().nextInt(1000))
                 .build();
-        System.out.println(jobPosting);
+
         //publisher.publish(Mapper.mapToString(jobPosting));
+        sender.send(Mapper.mapToString(jobPosting));
     }
 }
