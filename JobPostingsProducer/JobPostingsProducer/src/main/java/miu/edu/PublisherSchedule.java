@@ -36,7 +36,7 @@ public class PublisherSchedule {
                 .openFrom(RandomDate.getDate())
                 .count(new Random().nextInt(1000))
                 .build();
-        System.out.println(jobPosting);
-        //publisher.publish(Mapper.mapToString(jobPosting));
+        //System.out.println(jobPosting);
+        publisher.publish(Mapper.mapToString(jobPosting));
     }
 }
