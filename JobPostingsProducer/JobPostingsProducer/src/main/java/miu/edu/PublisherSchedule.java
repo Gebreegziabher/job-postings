@@ -16,7 +16,7 @@ public class PublisherSchedule {
     @Autowired
     DataPublisher publisher;
 
-    @Scheduled(fixedRate = 5000) //run every 30 seconds
+    @Scheduled(fixedRate = 15000) //run every 15 seconds
     public void run() throws JsonProcessingException {
         JobPosting jobPosting = new JobPosting.Builder()
                 .company(Company.name())
