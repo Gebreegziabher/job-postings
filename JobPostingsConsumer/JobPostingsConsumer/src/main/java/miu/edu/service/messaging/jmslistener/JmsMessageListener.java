@@ -15,6 +15,6 @@ public class JmsMessageListener {
     @JmsListener(destination = "job-posting")
     public void receive(String message) throws JsonProcessingException {
         JobPosting jobPosting = Mapper.mapToObject(message, JobPosting.class);
-        jobPostingService.save(jobPosting);
+        jobPostingService.save(jobPosting).subscribe();
     }
 }

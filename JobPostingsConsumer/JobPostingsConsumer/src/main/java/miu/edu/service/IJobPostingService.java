@@ -11,7 +11,8 @@ public interface IJobPostingService {
     Mono<JobPosting> save(JobPosting jobPosting);
     Mono<JobPosting> findById(String id);
     Flux<JobPosting> findAll();
-    void deleteById(String id);
+    Mono<Void> deleteById(String id);
+    Mono<Void> deleteAll();
     Flux<JobPosting> findByDate(Date date);
     //Flux<JobStatistics> getJobStatistics();
 }

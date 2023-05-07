@@ -1,18 +1,21 @@
 package miu.edu.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import miu.edu.domain.JobPosting;
 import miu.edu.repository.IJobPostingRepository;
-import miu.edu.service.records.JobStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
+@Transactional
 public class JobPostingServiceImpl implements IJobPostingService {
 
     @Autowired
@@ -21,7 +24,7 @@ public class JobPostingServiceImpl implements IJobPostingService {
     @Override
     public Mono<JobPosting> save(JobPosting jobPosting) {
         var response = jobPostingRepository.save(jobPosting);
-        response.subscribe(savedJobPosting -> System.out.println(savedJobPosting));
+        //response.subscribe(savedJobPosting -> System.out.println(savedJobPosting));
         return response;
     }
 
@@ -41,8 +44,13 @@ public class JobPostingServiceImpl implements IJobPostingService {
     }
 
     @Override
-    public void deleteById(String id) {
-        jobPostingRepository.deleteById(id);
+    public Mono<Void> deleteById(String id) {
+        return jobPostingRepository.deleteById(id);
+    }
+
+    @Override
+    public Mono<Void> deleteAll() {
+        return jobPostingRepository.deleteAll();
     }
 
 //    @Override
