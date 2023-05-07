@@ -13,15 +13,17 @@ public class PublisherSchedule {
     @Autowired
     KafkaPublisher publisher;
 
-<<<<<<< HEAD
     @Autowired
-    JmsSender sender;
+    JmsSender jmsSender;
 
-=======
->>>>>>> d753d7fa05aa3b92833f2ef605db44eefc07cea3
     @Scheduled(fixedRate = 15000) //run every 15 seconds
     public void run() throws JsonProcessingException {
-        JobPosting jobPosting = new JobPosting.Builder()
+        jmsSender.send(Mapper.mapToString(generate()));
+        publisher.publish(Mapper.mapToString(generate()));
+    }
+
+    public JobPosting generate() {
+        return new JobPosting.Builder()
                 .company(Company.name())
                 .companyRating(CompanyRating.rating())
                 .companySize(CompanySize.size())
@@ -39,13 +41,5 @@ public class PublisherSchedule {
                 .openFrom(RandomDate.getDate())
                 .count(new Random().nextInt(1000))
                 .build();
-<<<<<<< HEAD
-
-        //publisher.publish(Mapper.mapToString(jobPosting));
-        sender.send(Mapper.mapToString(jobPosting));
-=======
-        //System.out.println(jobPosting);
-        publisher.publish(Mapper.mapToString(jobPosting));
->>>>>>> d753d7fa05aa3b92833f2ef605db44eefc07cea3
     }
 }
