@@ -1,6 +1,9 @@
 package miu.edu;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import miu.edu.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,14 +19,14 @@ public class PublisherSchedule {
     @Autowired
     JmsSender jmsSender;
 
-    @Scheduled(fixedRate = 15000) //run every 15 seconds
+    @Scheduled(fixedRate = 5000) //run every 15 seconds
     public void run() throws JsonProcessingException {
-        jmsSender.send(Mapper.mapToString(generate()));
+        //jmsSender.send(Mapper.mapToString(generate()));
         publisher.publish(Mapper.mapToString(generate()));
     }
 
     public JobPosting generate() {
-        return new JobPosting.Builder()
+        return JobPosting.builder()
                 .company(Company.name())
                 .companyRating(CompanyRating.rating())
                 .companySize(CompanySize.size())
