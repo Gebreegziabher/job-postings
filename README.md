@@ -16,3 +16,5 @@ This is a simple system created to demonstrate how messaging, data processing an
 * Angular
 
 ![Architecture](https://github.com/Gebreegziabher/job-postings/assets/6954726/ef290f54-f040-47f3-a428-e1b99c78f856)
+
+https://github.com/Gebreegziabher/job-postings/assets/6954726/b2685546-5117-4c7d-9809-a3a8e02d682c
